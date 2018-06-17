@@ -25,5 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.static("public"));
 
 //Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mongoHeadlines")
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"
 
+mongoose.Promoise = Promise;
+mongoose.connect(MONGODB_URI);
+
+// Start the server
+app.listen(PORT, function() {
+    console.log("App running on port " + PORT + "!");
+  });
+  
