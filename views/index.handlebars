@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <nav class="navbar fixed-top navbar-expand-lg bg-dark">
+    <nav class="navbar fixed-top navbar-expand-lg bg-primary">
         <a class="navbar-brand text-light" href="/">Rei's Political Hub</a>
         <button class="navbar-toggler bg-secondary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
 <br>
 <br>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron">
     <div class="container">
         <h1 class="display-4 text-center">Welcome to Rei's Political Hub</h1>
         <p class="lead text-center">Scrape Political News for articles, pin and comment on your favorites.</p>
@@ -43,22 +43,22 @@
 
     {{#each results}}
     <div class="card d-flex flex-column mt-4">
-        <div class="card-header bg-dark text-light">{{title}}</div>
-        <div class="card-body bg-secondary">
+        <div class="card-header bg-danger text-light">{{title}}</div>
+        <div class="card-body">
             <p class="text-light">{{desc}}</p>
             <a class="text-warning" target="_BLANK" href={{link}}>{{link}}</a>
         </div>
-        <div class="card-footer bg-secondary d-flex justify-content-end">
+        <div class="card-footer d-flex justify-content-end">
             {{#unless pinned}}
-            <button class="btn btn-dark mx-1 pin" data-pinned="false" data-articleId="{{_id}}">
+            <button class="btn btn-danger mx-1 pin" data-pinned="false" data-articleId="{{_id}}">
                 <i class="fas fa-thumbtack text-light" data-articleId="{{_id}}"></i>
             </button>
             {{/unless}} {{#if pinned}}
-            <button class="btn btn-dark mx-1 pin" data-pinned="true" data-articleId="{{_id}}">
+            <button class="btn btn-danger mx-1 pin" data-pinned="true" data-articleId="{{_id}}">
                 <i class="fas fa-times text-light" data-pinned="true" data-articleId="{{_id}}"></i>
             </button>
             {{/if}}
-            <button class="btn btn-dark mx-1" type="button" data-toggle="collapse" data-target="#commentDrawer-{{_id}}" aria-expanded="false"
+            <button class="btn btn-danger mx-1" type="button" data-toggle="collapse" data-target="#commentDrawer-{{_id}}" aria-expanded="false"
                 aria-controls="commentDrawer-{{_id}}">
                 Comments ({{comments.length}})
             </button>
@@ -84,7 +84,7 @@
                         <label for="authorField-{{_id}}">Enter your name:</label>
                         <input type="text" class="form-control" id="authorField-{{_id}}"></input>
                     </div>
-                    <button class="btn btn-dark d-flex mx-auto replyBtn" data-articleId="{{_id}}">Submit</button>
+                    <button class="btn btn-danger d-flex mx-auto replyBtn" data-articleId="{{_id}}">Submit</button>
                 </form>
                 <button class="btn btn-light d-flex ml-auto mt-1" data-toggle="collapse" data-target="#commentDrawer-{{_id}}">
                     <i class="fas fa-times text-dark"></i>
@@ -108,7 +108,7 @@
                     Scraping Kotaku...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

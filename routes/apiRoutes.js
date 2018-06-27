@@ -1,12 +1,10 @@
 const db = require('../models/Index.js');
+const request= require("request");
 const axios = require("axios");
 const cheerio = require('cheerio');
 const router = require("express").Router();
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-
-
-
 
 // A GET route for scraping the echoJS website
 router.get("/scrape", function (req, res) {
@@ -15,7 +13,7 @@ router.get("/scrape", function (req, res) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       const $ = cheerio.load(response.data);
   
-      // Now, we grab every h2 within an article tag, and do the following:
+      // Now, we grab every h1 within an article tag, and do the following:
       $("section h1").each(function(i, element) {
         // Save an empty result object
         let result = {};
@@ -28,7 +26,7 @@ router.get("/scrape", function (req, res) {
           .children("a")
           .attr("href");
   
-        // Create a new Article using the `result` object built from scraping
+        //Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function(dbArticle) {
             // View the added result in the console
@@ -38,6 +36,7 @@ router.get("/scrape", function (req, res) {
             // If an error occurred, send it to the client
             return res.json(err);
           });
+        
       });
   
       // If we were able to successfully scrape and save an Article, send a message to the client
@@ -65,6 +64,7 @@ router.get("/articles/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
       // ..and populate all of the notes associated with it
       .populate("note")
+      .sort({_id: -1})
       .then(function(dbArticle) {
         // If we were able to successfully find an Article with the given id, send it back to the client
         res.json(dbArticle);
@@ -95,4 +95,11 @@ router.get("/articles/:id", function(req, res) {
       });
   });
 
+  // Route for pinning an Article
+  router.post('/pins/:articleId', (req, res) => {
+    let articleId = req.params.articleId;
+    db.Article.findOneAndUpdate({_id: articleId}, { $set: {pinned: req.body.pin} }, {new: true})
+    .then(updatedArticle => res.json(updatedArticle))
+    .catch(err => res.json(err));
+});''
   module.exports = router
