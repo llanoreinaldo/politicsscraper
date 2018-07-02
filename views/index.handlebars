@@ -1,11 +1,7 @@
 <div class="container-fluid">
 
     <nav class="navbar fixed-top navbar-expand-lg bg-primary">
-        <a class="navbar-brand text-light" href="/">Rei's Political Hub</a>
-        <button class="navbar-toggler bg-secondary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars text-light"></i>
-        </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -22,24 +18,31 @@
                 </li>
                 {{/if}}
             </ul>
-
         </div>
+        
+        <a class="navbar-brand text-center" href="/">Welcome to Rei's Political Hub</a>
+        {{!-- <button class="navbar-toggler bg-secondary" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-light"></i>
+        </button> --}}
     </nav>
 </div>
 <br>
 <br>
 
 <div class="jumbotron">
-    <div class="container">
-        <h1 class="display-4 text-center">Welcome to Rei's Political Hub</h1>
-        <p class="lead text-center">Scrape Political News for articles, pin and comment on your favorites.</p>
+    <div class="container bg-warning">
+        <h1 class="display-4 text-center">Get the Most Recent Political News.</h1>
+        <h1 class="display-4 text-center">Comment and Pin Your Favorites.</h1>
+        <hr>
         {{#unless results}}
         <button class="btn btn-danger scrape d-flex mx-auto" data-toggle="modal" data-target="#scrapeModal">Get Political News!</button>
         {{/unless}}
+        <br>
     </div>
 </div>
 
-<div class="container">
+<div class="container bg-primary">
 
     {{#each results}}
     <div class="card d-flex flex-column mt-4">

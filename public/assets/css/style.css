@@ -1,12 +1,7 @@
-body { background-color: #F2F6D0 }
-
-.jumbotron {
-  background-image: url(../images/whitehouse2.png);
-  background-size: cover
-}
 
 .jumbotron h1, p {
-  color:blue
+  color:black;
+  font-weight: 900;
 }
 
 #wrapper {
@@ -40,8 +35,8 @@ textarea {
 }
 
 button.scrape:hover {
-  background-color: blue;
-  border-color: blue;
+  background-color:royalblue;
+  border-color: white;
 }
 
 button.scrape:focus {
