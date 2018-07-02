@@ -1,4 +1,14 @@
 body { background-color: #F2F6D0 }
+
+.jumbotron {
+  background-image: url(../images/whitehouse2.png);
+  background-size: cover
+}
+
+.jumbotron h1, p {
+  color: white
+}
+
 #wrapper {
   width: 960px;
   margin-left: auto;
