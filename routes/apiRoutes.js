@@ -10,7 +10,7 @@ const logger = require("morgan");
 router.get("/scrape", function (req, res) {
   // First, we grab the body of the html with request
   request("http://www.politico.com/", (error, response, body) => {
-   
+
     if (error) return console.log(error);
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     const $ = cheerio.load(body);
@@ -37,7 +37,7 @@ router.get("/scrape", function (req, res) {
       data.link = $('a.js-tealium-tracking', element).attr("href");
       results.push(data);
     });
-    
+
     //Create a new Article using the `result` object built from scraping
     db.Article.insertMany(results.reverse(), {
       ordered: false,
@@ -48,7 +48,7 @@ router.get("/scrape", function (req, res) {
         results: docs
       });
       // View the added result in the console
-    
+
     });
   });
 });
@@ -114,20 +114,25 @@ router.post("/articles/:id", function (req, res) {
     });
 });
 
+// Route for commenting on an Article
+router.post('/commentOn/:articleId', (req, res) => {
+  let articleId = req.params.articleId;
+  db.Comment.create(req.body)
+  .then(newComment => {
+      return db.Article.findOneAndUpdate({_id: articleId}, {$push: {comments: newComment._id} }, {new: true});
+  })
+  .then(updatedArticle => res.json(updatedArticle))
+  .catch(err => res.json(err));
+});
+
 // Route for pinning an Article
 router.post('/pins/:articleId', (req, res) => {
   let articleId = req.params.articleId;
-  db.Article.findOneAndUpdate({
-      _id: articleId
-    }, {
-      $set: {
-        pinned: req.body.pin
-      }
-    }, {
-      new: true
-    })
-    .then(updatedArticle => res.json(updatedArticle))
-    .catch(err => res.json(err));
+  db.Article.findOneAndUpdate({_id: articleId}, { $set: {pinned: req.body.pin} }, {new: true})
+  .then(updatedArticle => res.json(updatedArticle))
+  .catch(err => res.json(err));
 });
-''
+
+
+
 module.exports = router
