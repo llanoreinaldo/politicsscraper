@@ -18,7 +18,7 @@
                 </li>
                 {{#if results}}
                 <li class="nav-item">
-                    <button class="btn btn-success scrape" data-toggle="modal" data-target="#scrapeModal">Get Political News</button>
+                    <button class="btn btn-danger scrape" data-toggle="modal" data-target="#scrapeModal">Get Political News</button>
                 </li>
                 {{/if}}
             </ul>
@@ -34,7 +34,7 @@
         <h1 class="display-4 text-center">Welcome to Rei's Political Hub</h1>
         <p class="lead text-center">Scrape Political News for articles, pin and comment on your favorites.</p>
         {{#unless results}}
-        <button class="btn btn-success scrape d-flex mx-auto" data-toggle="modal" data-target="#scrapeModal">Get Political News!</button>
+        <button class="btn btn-danger scrape d-flex mx-auto" data-toggle="modal" data-target="#scrapeModal">Get Political News!</button>
         {{/unless}}
     </div>
 </div>

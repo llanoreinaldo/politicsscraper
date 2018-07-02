@@ -9,45 +9,47 @@ const logger = require("morgan");
 // A GET route for scraping the echoJS website
 router.get("/scrape", function (req, res) {
   // First, we grab the body of the html with request
-  axios.get("http://www.politico.com/").then(function (response) {
+  request("http://www.politico.com/", (error, response, body) => {
+   
+    if (error) return console.log(error);
     // Then, we load that into cheerio and save it to $ for a shorthand selector
-    const $ = cheerio.load(response.data);
+    const $ = cheerio.load(body);
+
+    // Save an empty result object
+    var results = [];
 
     // Now, we grab every h1 within an article tag, and do the following:
-    $("section h1").each(function (i, element) {
-      // Save an empty result object
-      var result = {};
+    // Add the text and href of every link, and save them as properties of the result object
+    $('section h1').each((index, element) => {
+      let data = {};
+      $('a.js-tealium-tracking', element).each((index2, element2) => {
+        if (index2 == 0) data.title = $(element2).text();
+      });
+      console.log(data);
 
-      // Add the text and href of every link, and save them as properties of the result object
-      $('article').each((index, element) => {
-        let data = {};
-        $('a.js-tealium-tracking', element).each((index2, element2) => {
-          if (index2 == 0) data.title = $(element2).text();
-        });
-        if (data.title.length == 0) {
-          data.title = $('p', element).text();
-        } else {
-          data.desc = $('p', element).text();
-        }
-        data.link = $('a.js-tealium-tracking', element).attr("href");
-        results.push(data);
+      if (data.title.length == 0) {
+        data.title = $('p', element).text();
+      } else {
+        data.desc = $('p', element).text();
+      }
+      data.link = $('a.js-tealium-tracking', element).attr("href");
+      results.push(data);
+    });
+    
+    //Create a new Article using the `result` object built from scraping
+    db.Article.insertMany(results.reverse(), {
+      ordered: false,
+      rawResult: false
+    }, (err, docs) => {
+      res.json({
+        errors: err,
+        results: docs
       });
-      //Create a new Article using the `result` object built from scraping
-      db.Article.insertMany(results.reverse(), {
-        ordered: false,
-        rawResult: false
-      }, (err, docs) => {
-        res.json({
-          errors: err,
-          results: docs
-        });
-        // View the added result in the console
-        console.log(dbArticle);
-      });
+      // View the added result in the console
+      console.log(dbArticle);
     });
   });
 });
-
 
 // Route for getting all Articles from the db
 router.get("/articles", function (req, res) {
