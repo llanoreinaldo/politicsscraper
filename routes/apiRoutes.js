@@ -27,7 +27,9 @@ router.get("/scrape", function (req, res) {
       });
       console.log(data);
 
-      if (data.title.length == 0) {
+      const title = data.title || '';
+
+      if (title.length == 0) {
         data.title = $('p', element).text();
       } else {
         data.desc = $('p', element).text();
@@ -46,7 +48,7 @@ router.get("/scrape", function (req, res) {
         results: docs
       });
       // View the added result in the console
-      console.log(dbArticle);
+    
     });
   });
 });
