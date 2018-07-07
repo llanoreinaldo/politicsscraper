@@ -35,7 +35,7 @@ $(".replyBtn").click(event => {
         body: body
     };
     if (author.length > 0) data.author = author;
-    $.post('/articles/:id' + articleId, data, resp => {
+    $.post('/api/commentOn/' + articleId, data, resp => {
         location.reload();
     });
 });
@@ -46,7 +46,7 @@ $(".pin").click(event => {
     pinned === "true" ? newPin = false : newPin = true;
     var articleId = $(event.target).attr('data-articleId');
     console.log("id: ", articleId)
-    $.post('/pins/:articleId' + articleId, {
+    $.post('/api/pins/' + articleId, {
         pin: newPin
     }, resp => {
         //console.log(resp)
