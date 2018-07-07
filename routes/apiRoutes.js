@@ -116,7 +116,7 @@ router.post("/articles/:id", function (req, res) {
 
 // Route for commenting on an Article
 router.post('/commentOn/:articleId', (req, res) => {
-  let articleId = req.params.articleId;
+  let articleId = req.params.id;
   db.Comment.create(req.body)
   .then(newComment => {
       return db.Article.findOneAndUpdate({_id: articleId}, {$push: {comments: newComment._id} }, {new: true});
@@ -127,7 +127,7 @@ router.post('/commentOn/:articleId', (req, res) => {
 
 // Route for pinning an Article
 router.post('/pins/:articleId', (req, res) => {
-  let articleId = req.params.articleId;
+  let articleId = req.params.id;
   db.Article.findOneAndUpdate({_id: articleId}, { $set: {pinned: req.body.pin} }, {new: true})
   .then(updatedArticle => res.json(updatedArticle))
   .catch(err => res.json(err));
