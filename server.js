@@ -41,7 +41,8 @@ app.set("view engine", "handlebars");
 
 
 //Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_r6nj853j:5q7i7j8ia9r21rt0am02b9e1tp@ds123981.mlab.com:23981/heroku_r6nj853j"
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_r6nj853j:5q7i7j8ia9r21rt0am02b9e1tp@ds123981.mlab.com:23981/heroku_r6nj853j"
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines"
 
 mongoose.Promoise = Promise;
 mongoose.connect(MONGODB_URI);
