@@ -36,6 +36,7 @@ $(".replyBtn").click(event => {
     };
     if (author.length > 0) data.author = author;
     $.post('/api/commentOn/' + articleId, data, resp => {
+        console.log(resp);
         location.reload();
     });
 });
@@ -46,10 +47,8 @@ $(".pin").click(event => {
     pinned === "true" ? newPin = false : newPin = true;
     var articleId = $(event.target).attr('data-articleId');
     console.log("id: ", articleId)
-    $.post('/api/pins/' + articleId, {
-        pin: newPin
-    }, resp => {
-        //console.log(resp)
+    $.post('/api/pins/' + articleId, { pin: newPin }, resp => {
+        console.log(resp);
         location.reload();
     });
 });

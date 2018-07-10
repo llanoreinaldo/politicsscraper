@@ -3,7 +3,7 @@ const db = require('../models/Index.js');
 
 router.get('/', (req, res) => {
     db.Article.find()
-    .populate('comments')
+    .populate('note')
     .sort({_id: -1})
     .then( (results) => {
         //res.json(results);
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 router.get('/pinned', (req, res) => {
     db.Article.find({pinned: true})
-    .populate('comments')
+    .populate('note')
     .sort({_id: -1})
     .then( (results) => {
         //res.json(results);
